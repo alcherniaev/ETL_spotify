@@ -1,16 +1,30 @@
-# This is a sample Python script.
+import sqlalchemy
+import pandas as pd
+from sqlalchemy.orm import sessionmaker
+import requests
+import json
+from datetime import datetime
+import datetime
+import _sqlite3
 
-# Press ⌃R to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
+DATABASE_LOCATION = 'sqlite://Users/alcherniaev/PycharmProjects/ETL_spotify/my_tracks.sqlite'
+USER_ID = '05q92yrt0926gkmfrvves51wi'
+TOKEN = 'BQAkW61Tv3QPVx6p-h7jqG6wPO11Py8NSOYZUCeIq7z62m7j85hVWD-IhEf4HFM7RwoWOiK2M9l97VbcIK3pl4qGIqRAmecHqsIFPv6oVAVT3kuVgjUGMEwLN5ayzHkosfANIOsz3LXCIdg156CKq0JA5UzXjS9jiZDTidj_'
 
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    print_hi('PyCharm')
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    headers = {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "Authorization": f"Bearer {TOKEN}"
+    }
+
+    today = datetime.datetime.now()
+    yesterday = today - datetime.timedelta(days=1)
+    yesterday_unix_timestamp = int(yesterday.timestamp()) * 1000
+
+    r = requests.get(f"https://api.spotify.com/v1/me/player/recently-played?after={yesterday_unix_timestamp}", headers=headers)
+
+    data = r.json()
+
+    print(data)
