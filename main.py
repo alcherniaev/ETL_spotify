@@ -5,14 +5,14 @@ import requests
 import json
 from datetime import datetime
 import datetime
-import _sqlite3
+import sqlite3
 
 
 
 
-DATABASE_LOCATION = 'sqlite://Users/alcherniaev/PycharmProjects/ETL_spotify/my_tracks.sqlite'
+DATABASE_LOCATION = 'sqlite:///my_tracks.sqlite'
 USER_ID = '05q92yrt0926gkmfrvves51wi'
-TOKEN = "BQAPZi8oW7WSdDJ0_jC6Qzf0Ih3OJIs4tcjJy3HUAUF_9e3eoX0GjcHMagi1nX5Bux4-cQkH9LwUGzqEkJ9VRzZKeC9EvjjIXmObYDy2dwOK1eCOJR4vu--BpH1voBJ-5zlwHyvypudR14KraHy4MHm3KGtHvGnH5tuMqBtT"
+TOKEN = "BQDkcRlIr7uT6yUXjWx92fkTyznWvMSXYv8k-vHnl76Y1cLPpVM4Iz7OCP8z2MDSrfFY70O3MTmWVuLeMjmmdi-6ZcOQKpthtNDq9kf3IzoTR-9Obp2XOYxXQKY1sA4J53ZpMtEw0R2c0I2KcMcKLijKd9q3mdSHIdHs8V6m"
 
 def check_data(df: pd.DataFrame) -> bool:
     list_error = []
@@ -52,7 +52,6 @@ def check_data(df: pd.DataFrame) -> bool:
 if __name__ == '__main__':
 
     # Extract part
-
     headers = {
         "Accept": "application/json",
         "Content-Type": "application/json",
@@ -94,4 +93,36 @@ if __name__ == '__main__':
     if check_data(song_df):
         print("Data valid, proceed to Load stage")
 
-    print(song_df)
+
+    # Load
+    engine = sqlalchemy.create_engine(DATABASE_LOCATION)
+    connect = sqlite3.connect("my_tracks.sqlite")
+    cursor = connect.cursor()
+
+    querry = """
+    CREATE TABLE IF NOT EXISTS my_tracks(
+        song VARCHAR(200),
+        artist VARCHAR(200),
+        played_at VARCHAR(200),
+        timestamp VARCHAR(200),
+        CONSTRAINT primary_key_constraint PRIMARY KEY (played_at)
+        )
+    """
+
+    cursor.execute(querry)
+
+    #song_df.to_sql("my_tracks", engine, index=False, if_exists='replace')
+    try:
+        song_df.to_sql("my_tracks", engine, index=False, if_exists='append')
+    except:
+        print('Data already exists in the database')
+
+    connect.close()
+    print("Close database successfully")
+
+
+
+
+
+
+    #print(song_df)
