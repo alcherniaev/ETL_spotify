@@ -12,7 +12,7 @@ import sqlite3
 
 DATABASE_LOCATION = 'sqlite:///my_tracks.sqlite'
 USER_ID = '05q92yrt0926gkmfrvves51wi'
-TOKEN = "BQDkcRlIr7uT6yUXjWx92fkTyznWvMSXYv8k-vHnl76Y1cLPpVM4Iz7OCP8z2MDSrfFY70O3MTmWVuLeMjmmdi-6ZcOQKpthtNDq9kf3IzoTR-9Obp2XOYxXQKY1sA4J53ZpMtEw0R2c0I2KcMcKLijKd9q3mdSHIdHs8V6m"
+TOKEN = "BQCcxRzKJ_l5lASf-kQOcCIX_cMW6_grzbdE0gOAW7xTh4mNYLTtgiMXNAUAWCdV-3cq0kb_8rd1RB5MMp0ksKe5lMZVAAqlpTr_97gyzmVWLLV0W084waYFeOjPUG2x7jEQNy6s_SzdYetzZ3oGyM08umoErBPWBrbtkes-"
 
 def check_data(df: pd.DataFrame) -> bool:
     list_error = []
