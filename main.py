@@ -28,17 +28,19 @@ def check_data(df: pd.DataFrame) -> bool:
     message_null = "Null values found"
     assert not df.isnull().values.any(), list_error.append(message_null)
 
-    '''    # is it last 24 hours ?
+    # is it last 24 hours ?
     yesterday_ = datetime.datetime.now() - datetime.timedelta(days=1)
     yesterday_ = yesterday_.replace(hour=0, minute=0, second=0, microsecond=0)
-
+    today_ = datetime.datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
+    yesterday_list = [yesterday_, today_]
     timestamps = df["timestamp"].to_list()
+
     for timestamp in timestamps:
-        if datetime.datetime.strptime(timestamp, "%Y-%m-%d") != yesterday_:
+        if datetime.datetime.strptime(timestamp, "%Y-%m-%d") not in yesterday_list:
             print(yesterday_)
             list_error.append("Something wrong with timestamps")
             raise Exception("Something wrong with timestamps")
-    '''
+
     if not list_error:
         return True
     else:
