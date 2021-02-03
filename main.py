@@ -7,6 +7,9 @@ from datetime import datetime
 import datetime
 import _sqlite3
 
+
+
+# Extract part
 DATABASE_LOCATION = 'sqlite://Users/alcherniaev/PycharmProjects/ETL_spotify/my_tracks.sqlite'
 USER_ID = '05q92yrt0926gkmfrvves51wi'
 TOKEN = 'BQAkW61Tv3QPVx6p-h7jqG6wPO11Py8NSOYZUCeIq7z62m7j85hVWD-IhEf4HFM7RwoWOiK2M9l97VbcIK3pl4qGIqRAmecHqsIFPv6oVAVT3kuVgjUGMEwLN5ayzHkosfANIOsz3LXCIdg156CKq0JA5UzXjS9jiZDTidj_'
