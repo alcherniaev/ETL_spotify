@@ -12,7 +12,6 @@ USER_ID = '05q92yrt0926gkmfrvves51wi'
 TOKEN = 'BQAkW61Tv3QPVx6p-h7jqG6wPO11Py8NSOYZUCeIq7z62m7j85hVWD-IhEf4HFM7RwoWOiK2M9l97VbcIK3pl4qGIqRAmecHqsIFPv6oVAVT3kuVgjUGMEwLN5ayzHkosfANIOsz3LXCIdg156CKq0JA5UzXjS9jiZDTidj_'
 
 if __name__ == '__main__':
-
     headers = {
         "Accept": "application/json",
         "Content-Type": "application/json",
@@ -28,3 +27,25 @@ if __name__ == '__main__':
     data = r.json()
 
     print(data)
+
+    songs = []
+    artist = []
+    played_at = []
+    timestamps = []
+
+    for song in data["items"]:
+        songs.append(song["track"]["name"])
+        artist.append(song["track"]["album"]["artists"][0]["name"])
+        played_at.append(song["played_at"])
+        timestamps.append(song["played_at"][0:10])
+
+    song_dict = {
+        "song": songs,
+        "artist": artist,
+        "played_at": played_at,
+        "timestamp": timestamps
+
+    }
+    song_df = pd.DataFrame(song_dict, columns=["song", "artist", "played_at", "timestamp"])
+
+    print(song_df)
